@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamics",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Make your Redux workflow slightly more dynamic",
   "main": "index.js",
   "repository": {
