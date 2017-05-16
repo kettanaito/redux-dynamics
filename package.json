@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/kettanaito/redux-dynamics/issues"
   },
-  "homepage": "https://github.com/kettanaito/redux-dynamics#readme"
+  "homepage": "https://github.com/kettanaito/redux-dynamics#readme",
+  "scripts": {
+    "release": "rm -rf ./lib && babel ./es6 --out-dir ./lib"
+  },
+  "dependencies": {
+    "immutable": "^3.8.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0"
+  }
 }
