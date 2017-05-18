@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/kettanaito/redux-dynamics#readme",
   "scripts": {
-    "test": "mocha es6/**/*.spec.js --compilers js:babel-core/register",
+    "test": "mocha tests/**/*.js --compilers js:babel-core/register",
     "release": "rm -rf ./lib && babel ./es6 --out-dir ./lib"
   },
   "dependencies": {
