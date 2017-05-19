@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable';
+import { Iterable, fromJS } from 'immutable';
 
 const defaultOptions = {
   initialState: {}
@@ -23,11 +23,11 @@ export function createReducer(options) {
   }
 
   return (state, action) => {
-    /* Presume a new state */
+    /* Duplicate the state for further changes */
     let newState = state || initialState;
 
-    /* Convert mutable state to immutable */
-    if (!(newState instanceof Map)) {
+    /* Enforce immutable state */
+    if (!Iterable.isIterable(newState)) {
       newState = fromJS(newState);
     }
 
