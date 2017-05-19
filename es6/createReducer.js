@@ -1,7 +1,7 @@
 import { Iterable, fromJS } from 'immutable';
 
 const defaultOptions = {
-  initialState: {}
+  initialState: fromJS({})
 };
 
 /**
@@ -16,7 +16,7 @@ export function createReducer(options) {
   let { initialState, actions } = options || defaultOptions;
 
   /* Provide arguments fallback */
-  !initialState && (initialState = {});
+  !initialState && (initialState = defaultOptions.initialState);
 
   if (!actions) {
     throw Error(`Shorthand reducer should have {actions} property specified, but received: ${actions}.`);
