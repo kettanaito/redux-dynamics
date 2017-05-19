@@ -29,7 +29,7 @@ describe('Create reducer', () => {
   /**
    * When no inital state is specified, should fallback to empty Object.
    */
-  it('Fails to create with missing actions', () => {
+  it('Fails to create without arguments', () => {
     try {
       const newReducer = createReducer();
     } catch(error) {
@@ -60,5 +60,16 @@ describe('Create reducer', () => {
     const state = store.getState();
 
     return expect(state.get('counter')).to.equal(2);
+  });
+
+  /**
+   * When unknown action is being dispatched, reducer should not react to it.
+   */
+  it('Ignore unknown actions', () => {
+    const prevState = store.getState();
+    store.dispatch({ type: 'UNKNOWN_ACTION' });
+    const nextState = store.getState();
+
+    return expect(nextState).to.equal(prevState);
   });
 });
