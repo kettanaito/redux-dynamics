@@ -9,8 +9,7 @@ const reducer = createReducer({
     likes: 0,
     author: {
       name: undefined,
-      postCount: 0,
-      posts: []
+      postCount: 0
     }
   },
   actions: [
@@ -20,6 +19,10 @@ const reducer = createReducer({
         const currentCount = state.get('counter');
         return state.set('counter', currentCount + action.amount);
       }
+    },
+    {
+      type: 'RESET_COUNTER',
+      reducer: state => state.delete('counter')
     },
     {
       type: ['LIKE_POST', 'LIKE_AUTHOR'],
@@ -130,5 +133,16 @@ describe('Create reducer', () => {
       expect(author).to.have.property('name', 'John Maverick') &&
       expect(author).to.have.property('postCount', 32)
     );
+  });
+
+  /**
+   * When some of the properties are removed, their values should fallback to the ones
+   * specified as the initial values from the initial state Record.
+   */
+  it('Fallbacks to default Record value on removal', () => {
+    store.dispatch({ type: 'RESET_COUNTER' });
+    const state = store.getState();
+
+    return expect(state.get('counter')).to.equal(0);
   });
 });
