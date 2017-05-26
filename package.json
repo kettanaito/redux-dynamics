@@ -2,7 +2,12 @@
   "name": "redux-dynamics",
   "version": "0.1.0",
   "description": "Make your Redux workflow slightly more dynamic",
+  "author": "Artem Zakharchenko",
+  "license": "MIT",
   "main": "index.js",
+  "engines": {
+    "node": ">=5"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kettanaito/redux-dynamics.git"
@@ -10,8 +15,6 @@
   "keywords": [
     "redux"
   ],
-  "author": "Artem Zakharchenko",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kettanaito/redux-dynamics/issues"
   },
