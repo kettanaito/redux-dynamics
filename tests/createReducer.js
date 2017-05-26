@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { createStore } from 'redux';
-import { createReducer } from '../es6';
+import { createReducer } from '../';
 
 /* Create a reducer */
 const reducer = createReducer({
