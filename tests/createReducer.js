@@ -16,8 +16,9 @@ const reducer = createReducer({
     {
       type: 'INCREMENT_COUNTER',
       reducer(state, action) {
-        const currentCount = state.get('counter');
-        return state.set('counter', currentCount + action.amount);
+        const prevCount = state.get('counter');
+        const newCount = prevCount + action.amount;
+        return state.set('counter', newCount);
       }
     },
     {
@@ -27,8 +28,9 @@ const reducer = createReducer({
     {
       type: ['LIKE_POST', 'LIKE_AUTHOR'],
       reducer(state) {
-        let currentLikes = state.get('likes');
-        return state.set('likes', currentLikes + 1);
+        const prevLikes = state.get('likes');
+        const newLikes = prevLikes + 1;
+        return state.set('likes', newLikes);
       }
     },
     {
