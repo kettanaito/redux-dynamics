@@ -28,11 +28,13 @@ export function createReducer(args = defaultArgs) {
       newState = new Record(newState)();
     }
 
-    /* Iterate through each action type specified in {actions} */
-    Object.keys(actions).forEach((expectedType) => {
-      /* Once the type of the dispatched action matches the expected type, execute callback */
-      if (action.type === expectedType) {
-        newState = actions[expectedType](newState, action);
+    /* Iterate through each specified action */
+    actions.forEach((expectedAction) => {
+      const expectedType = expectedAction.type;
+      const shouldActionPass = Array.isArray(expectedType) ? expectedType.includes(action.type) : (action.type === expectedType);
+
+      if (shouldActionPass) {
+        newState = expectedAction.reducer(newState, action);
       }
     });
 

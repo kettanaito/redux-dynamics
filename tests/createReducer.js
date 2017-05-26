@@ -1,18 +1,29 @@
+import { expect } from 'chai';
 import { createStore } from 'redux';
 import { createReducer } from '../es6';
-import { expect } from 'chai';
 
 /* Create a reducer */
 const reducer = createReducer({
   initialState: {
-    counter: 0
+    counter: 0,
+    likes: 0
   },
-  actions: {
-    INCREMENT_COUNTER: (state, action) => {
-      const currentCount = state.get('counter');
-      return state.set('counter', currentCount + action.amount);
+  actions: [
+    {
+      type: 'INCREMENT_COUNTER',
+      reducer(state, action) {
+        const currentCount = state.get('counter');
+        return state.set('counter', currentCount + action.amount);
+      }
+    },
+    {
+      type: ['LIKE_POST', 'LIKE_AUTHOR'],
+      reducer(state) {
+        let currentLikes = state.get('likes');
+        return state.set('likes', currentLikes + 1);
+      }
     }
-  }
+  ]
 });
 
 /* Create a new Redux store */
@@ -60,6 +71,18 @@ describe('Create reducer', () => {
     const state = store.getState();
 
     return expect(state.get('counter')).to.equal(2);
+  });
+
+  /**
+   * When provided {actions[i].type} is an array, it should be possible to call reducer
+   * function if dispatched actions is included in the mentioned array.
+   */
+  it('One reducer function for multiple actions', () => {
+      store.dispatch({ type: 'LIKE_POST' });
+      store.dispatch({ type: 'LIKE_AUTHOR' });
+      const state = store.getState();
+
+      return expect(state.get('likes')).to.equal(2);
   });
 
   /**
