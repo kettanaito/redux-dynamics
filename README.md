@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kettanaito/redux-dynamics.svg?branch=master)](https://travis-ci.org/kettanaito/redux-dynamics)
+
 # Redux dynamics
 A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more comfortable.
 
