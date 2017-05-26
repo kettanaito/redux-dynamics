@@ -1,4 +1,4 @@
-import { Iterable, Record } from 'immutable';
+import { Iterable, Record, fromJS } from 'immutable';
 
 const defaultArgs = {
   initialState: new Record({})()
@@ -34,7 +34,7 @@ export function createReducer(args = defaultArgs) {
       const shouldActionPass = Array.isArray(expectedType) ? expectedType.includes(action.type) : (action.type === expectedType);
 
       if (shouldActionPass) {
-        newState = expectedAction.reducer(newState, action);
+        newState = expectedAction.reducer(newState, fromJS(action));
       }
     });
 

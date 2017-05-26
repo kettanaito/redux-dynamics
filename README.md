@@ -1,10 +1,11 @@
 # Redux dynamics
-A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow slightly more dynamic.
+A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more comfortable.
 
 ## Methods
-### `createReducer(initialState<Object>, actions<Array>)`
+### `createReducer({ initialState<Object>, actions<Array> })`
 * Simplifies declaration of `initialState`
 * Enforces immutability of the state
+* Enforces immutability of the action for seamless operations with the state
 * State is always an instance of [Immutable Record](https://facebook.github.io/immutable-js/docs/#/Record), which provides [certain benefits](https://tonyhb.gitbooks.io/redux-without-profanity/using_immutablejs_records.html)
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)
@@ -24,8 +25,7 @@ export default createReducer({
     },
     {
       type: 'GET_AUTHOR_SUCCESS',
-      reducer: (state, action) => state.set('author', action.payload.body)
-      }
+      reducer: (state, action) => state.set('author', action.getIn(['payload', 'body'])
     },
     {
       type: ['GET_AUTHOR_SUCCESS', 'GET_AUTHOR_ERROR'],

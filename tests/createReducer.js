@@ -17,7 +17,7 @@ const reducer = createReducer({
       type: 'INCREMENT_COUNTER',
       reducer(state, action) {
         const prevCount = state.get('counter');
-        const newCount = prevCount + action.amount;
+        const newCount = prevCount + action.get('amount');
         return state.set('counter', newCount);
       }
     },
@@ -34,14 +34,9 @@ const reducer = createReducer({
       }
     },
     {
-      type: 'GET_AUTHOR',
+      type: 'GET_AUTHOR_SUCCESS',
       reducer(state, action) {
-        const author = {
-          name: 'John Maverick',
-          postCount: 32
-        };
-
-        return state.set('author', author);
+        return state.set('author', action.getIn(['payload', 'body']));
       }
     }
   ]
@@ -124,12 +119,17 @@ describe('Create reducer', () => {
    */
   it ('Reduce nested state properties', () => {
     store.dispatch({
-      type: 'GET_AUTHOR',
-      authorId: 1
+      type: 'GET_AUTHOR_SUCCESS',
+      payload: {
+        body: {
+          name: 'John Maverick',
+          postCount: 32
+        }
+      }
     });
 
     const state = store.getState();
-    const author = state.get('author');
+    const author = state.get('author').toJS();
 
     return (
       expect(author).to.have.property('name', 'John Maverick') &&
