@@ -4,7 +4,7 @@ A collection of useful methods and tools to make your [Redux](http://redux.js.or
 ## Getting started
 Install `redux-dynamics` through npm:
 ```
-npm install kettanaito/redux-dynamics --save-dev
+npm install redux-dynamics --save-dev
 ```
 Include it in your project:
 ```js
