@@ -1,7 +1,7 @@
-import { Iterable, fromJS } from 'immutable';
+import { Iterable, Record } from 'immutable';
 
-const defaultOptions = {
-  initialState: fromJS({})
+const defaultArgs = {
+  initialState: new Record({})()
 };
 
 /**
@@ -10,13 +10,10 @@ const defaultOptions = {
  * in case it was not modified by any action.
  * @param {Object} initialState - Initial state of the reducer.
  * @param {Object} actions - Subscribed actions (format: { actionType: fn() } ).
- * @return {Function} Created reducer function.
+ * @return {Function} Reducer function.
  */
-export function createReducer(options) {
-  let { initialState, actions } = options || defaultOptions;
-
-  /* Provide arguments fallback */
-  !initialState && (initialState = defaultOptions.initialState);
+export function createReducer(args = defaultArgs) {
+  let { initialState, actions } = args;
 
   if (!actions) {
     throw Error(`Shorthand reducer should have {actions} property specified, but received: ${actions}.`);
@@ -28,7 +25,7 @@ export function createReducer(options) {
 
     /* Enforce immutable state */
     if (!Iterable.isIterable(newState)) {
-      newState = fromJS(newState);
+      newState = new Record(newState)();
     }
 
     /* Iterate through each action type specified in {actions} */
