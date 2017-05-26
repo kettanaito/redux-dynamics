@@ -6,7 +6,12 @@ import { createReducer } from '../es6';
 const reducer = createReducer({
   initialState: {
     counter: 0,
-    likes: 0
+    likes: 0,
+    author: {
+      name: undefined,
+      postCount: 0,
+      posts: []
+    }
   },
   actions: [
     {
@@ -21,6 +26,17 @@ const reducer = createReducer({
       reducer(state) {
         let currentLikes = state.get('likes');
         return state.set('likes', currentLikes + 1);
+      }
+    },
+    {
+      type: 'GET_AUTHOR',
+      reducer(state, action) {
+        const author = {
+          name: 'John Maverick',
+          postCount: 32
+        };
+
+        return state.set('author', author);
       }
     }
   ]
@@ -40,7 +56,7 @@ describe('Create reducer', () => {
   /**
    * When no inital state is specified, should fallback to empty Object.
    */
-  it('Fails to create without arguments', () => {
+  it('Fails to be created without arguments', () => {
     try {
       const newReducer = createReducer();
     } catch(error) {
@@ -60,14 +76,26 @@ describe('Create reducer', () => {
   });
 
   /**
+  * When unknown action is being dispatched, reducer should not react to it.
+  */
+  it('Ignores unknown actions', () => {
+    const prevState = store.getState();
+    store.dispatch({ type: 'UNKNOWN_ACTION' });
+    const nextState = store.getState();
+
+    return expect(nextState).to.equal(prevState);
+  });
+
+  /**
    * When a subscribed action is dispatched, should change the state according to the specified
    * reducer function in the arguments.
    */
-  it('Subscribes to actions', () => {
+  it('Calls reducer function on action dispatch', () => {
     store.dispatch({
       type: 'INCREMENT_COUNTER',
       amount: 2
     });
+
     const state = store.getState();
 
     return expect(state.get('counter')).to.equal(2);
@@ -77,7 +105,7 @@ describe('Create reducer', () => {
    * When provided {actions[i].type} is an array, it should be possible to call reducer
    * function if dispatched actions is included in the mentioned array.
    */
-  it('One reducer function for multiple actions', () => {
+  it('Accepts single reducer function for multiple action types', () => {
       store.dispatch({ type: 'LIKE_POST' });
       store.dispatch({ type: 'LIKE_AUTHOR' });
       const state = store.getState();
@@ -85,14 +113,22 @@ describe('Create reducer', () => {
       return expect(state.get('likes')).to.equal(2);
   });
 
-  /**
-   * When unknown action is being dispatched, reducer should not react to it.
-   */
-  it('Ignore unknown actions', () => {
-    const prevState = store.getState();
-    store.dispatch({ type: 'UNKNOWN_ACTION' });
-    const nextState = store.getState();
 
-    return expect(nextState).to.equal(prevState);
+  /**
+   * Reducer should be able to change nested state properties.
+   */
+  it ('Reduce nested state properties', () => {
+    store.dispatch({
+      type: 'GET_AUTHOR',
+      authorId: 1
+    });
+
+    const state = store.getState();
+    const author = state.get('author');
+
+    return (
+      expect(author).to.have.property('name', 'John Maverick') &&
+      expect(author).to.have.property('postCount', 32)
+    );
   });
 });
