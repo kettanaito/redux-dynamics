@@ -9,7 +9,7 @@ A collection of useful methods and tools to make your [Redux](http://redux.js.or
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)
 ```js
-import { createReducer } from 'redyx-dynamics';
+import { createReducer } from 'redux-dynamics';
 
 export default createReducer({
   initialState: {
