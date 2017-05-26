@@ -1,6 +1,22 @@
 # Redux dynamics
 A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more comfortable.
 
+## Getting started
+Install `redux-dynamics` through npm:
+```
+npm install kettanaito/redux-dynamics --save-dev
+```
+Include it in your project:
+```js
+/* VanillaJS */
+const reduxDynamics = require('redux-dynamics');
+const createReducer = require('redux-dynamics').createReducer;
+
+/* ES6+ */
+import reduxDynamics from 'redux-dynamics';
+import { createReducer } from 'redux-dynamics';
+```
+
 ## Methods
 ### `createReducer({ initialState<Object>, actions<Array> })`
 * Simplifies declaration of `initialState`
