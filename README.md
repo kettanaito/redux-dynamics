@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/kettanaito/redux-dynamics.svg?branch=master)](https://travis-ci.org/kettanaito/redux-dynamics)
+[![Coverage Status](https://coveralls.io/repos/github/kettanaito/redux-dynamics/badge.svg?branch=master)](https://coveralls.io/github/kettanaito/redux-dynamics?branch=master)
 
 # Redux dynamics
 A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more comfortable.
