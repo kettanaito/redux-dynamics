@@ -27,6 +27,7 @@ import { createReducer } from 'redux-dynamics';
 * Enforces immutability of the action for seamless operations with the state
 * State is always an instance of [Immutable Record](https://facebook.github.io/immutable-js/docs/#/Record), which provides [certain benefits](https://tonyhb.gitbooks.io/redux-without-profanity/using_immutablejs_records.html)
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
+* Supports RegExp as expected action type
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)
 ```js
 import { createReducer } from 'redux-dynamics';
@@ -34,6 +35,7 @@ import { createReducer } from 'redux-dynamics';
 export default createReducer({
   initialState: {
     isFetching: false,
+    errors: [],
     author: undefined,
     postCount: 0
   },
@@ -49,6 +51,13 @@ export default createReducer({
     {
       type: ['GET_AUTHOR_SUCCESS', 'GET_AUTHOR_ERROR'],
       reducer: state => state.set('isFetching', false)
+    },
+    {
+      type: /_(ERROR|FAILURE)$/,
+      reducer: (state, action) => {
+        const errorMessage = action.getIn(['payload', 'body', 'message']);
+        return state.update('errors', errors => errors.push(errorMessage));
+      }
     }
   ]
 });
