@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { createStore } from 'redux';
-import { createReducer } from '../';
+import { createReducer } from '../src';
 
 /* Create a reducer */
 const reducer = createReducer({

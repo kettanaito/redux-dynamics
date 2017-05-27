@@ -1,9 +1,10 @@
 const fs = require('fs');
+const path = require('path');
 const webpack = require('webpack');
 const package = JSON.parse(fs.readFileSync('./package.json'));
 
 module.exports = {
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, package.module),
   output: {
     path: __dirname,
     filename: package.main,
