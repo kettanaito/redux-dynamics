@@ -6,6 +6,7 @@ import { createReducer } from '../src';
 const reducer = createReducer({
   initialState: {
     counter: 0,
+    regExp: 0,
     likes: 0,
     author: {
       name: undefined,
@@ -37,6 +38,14 @@ const reducer = createReducer({
       type: 'GET_AUTHOR_SUCCESS',
       reducer(state, action) {
         return state.set('author', action.getIn(['payload', 'body']));
+      }
+    },
+    {
+      type: /_REGEXP$/,
+      reducer: (state) => {
+        const prevCount = state.get('regExp');
+        const newCount = prevCount + 1;
+        return state.set('regExp', newCount);
       }
     }
   ]
@@ -106,13 +115,12 @@ describe('Create reducer', () => {
    * function if dispatched actions is included in the mentioned array.
    */
   it('Accepts single reducer function for multiple action types', () => {
-      store.dispatch({ type: 'LIKE_POST' });
-      store.dispatch({ type: 'LIKE_AUTHOR' });
-      const state = store.getState();
+    store.dispatch({ type: 'LIKE_POST' });
+    store.dispatch({ type: 'LIKE_AUTHOR' });
+    const state = store.getState();
 
-      return expect(state.get('likes')).to.equal(2);
+    return expect(state.get('likes')).to.equal(2);
   });
-
 
   /**
    * Reducer should be able to change nested state properties.
@@ -146,5 +154,17 @@ describe('Create reducer', () => {
     const state = store.getState();
 
     return expect(state.get('counter')).to.equal(0);
+  });
+
+  /**
+   * When expected action type is provided as an instance of RegExp, should change the
+   * state once dispatched action type matches specified regular expression.
+   */
+  it('Supports RegExp as expected action type', () => {
+    store.dispatch({ type: 'TOUCH_REGEXP' });
+    store.dispatch({ type: 'ANYTHING_REGEXP' });
+    const state = store.getState();
+
+    return expect(state.get('regExp')).to.equal(2);
   });
 });
