@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamics",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Make your Redux workflow slightly more dynamic",
   "author": "Artem Zakharchenko",
   "license": "MIT",
@@ -27,7 +27,8 @@
     "install": "npm run build"
   },
   "dependencies": {
-    "immutable": "^3.8.1"
+    "immutable": "^3.8.1",
+    "webpack": "^2.6.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -37,7 +38,6 @@
     "coveralls": "^2.13.1",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.4.1",
-    "redux": "^3.6.0",
-    "webpack": "^2.6.1"
+    "redux": "^3.6.0"
   }
 }
