@@ -1,7 +1,7 @@
-import { Iterable, Record, fromJS } from 'immutable';
+import { Iterable, fromJS } from 'immutable';
 
 const defaultArgs = {
-  initialState: new Record({})()
+  initialState: {}
 };
 
 /**
@@ -25,7 +25,7 @@ export function createReducer(args = defaultArgs) {
 
     /* Enforce immutable state */
     if (!Iterable.isIterable(newState)) {
-      newState = new Record(newState)();
+      newState = fromJS(newState);
     }
 
     /* Iterate through each specified action */

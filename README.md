@@ -23,9 +23,8 @@ import { createReducer } from 'redux-dynamics';
 ## Methods
 ### `createReducer({ initialState<Object>, actions<Array> })`
 * Simplifies declaration of `initialState`
-* Enforces immutability of the state
+* Enforces immutability of the state (using [Immutable](https://facebook.github.io/immutable-js))
 * Enforces immutability of the action for seamless operations with the state
-* State is always an instance of [Immutable Record](https://facebook.github.io/immutable-js/docs/#/Record), which provides [certain benefits](https://tonyhb.gitbooks.io/redux-without-profanity/using_immutablejs_records.html)
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
 * Supports RegExp as expected action type
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)

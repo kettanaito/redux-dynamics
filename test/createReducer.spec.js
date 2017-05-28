@@ -146,17 +146,6 @@ describe('Create reducer', () => {
   });
 
   /**
-   * When some of the properties are removed, their values should fallback to the ones
-   * specified as the initial values from the initial state Record.
-   */
-  it('Fallbacks to default Record value on removal', () => {
-    store.dispatch({ type: 'RESET_COUNTER' });
-    const state = store.getState();
-
-    return expect(state.get('counter')).to.equal(0);
-  });
-
-  /**
    * When expected action type is provided as an instance of RegExp, should change the
    * state once dispatched action type matches specified regular expression.
    */
