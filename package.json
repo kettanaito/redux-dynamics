@@ -23,7 +23,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "test:coverage": "istanbul cover _mocha -- --compilers js:babel-register",
-    "build": "webpack"
+    "build": "webpack",
+    "install": "npm run build"
   },
   "dependencies": {
     "immutable": "^3.8.1"
