@@ -14,7 +14,9 @@
     "url": "git+https://github.com/kettanaito/redux-dynamics.git"
   },
   "keywords": [
-    "redux"
+    "dynamics",
+    "redux",
+    "redux-dynamics"
   ],
   "bugs": {
     "url": "https://github.com/kettanaito/redux-dynamics/issues"
@@ -24,11 +26,10 @@
     "test": "mocha --compilers js:babel-register",
     "test:coverage": "istanbul cover _mocha -- --compilers js:babel-register",
     "build": "webpack",
-    "install": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "immutable": "^3.8.1",
-    "webpack": "^2.6.1"
+    "immutable": "^3.8.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -38,6 +39,7 @@
     "coveralls": "^2.13.1",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.4.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "webpack": "^2.6.1"
   }
 }
