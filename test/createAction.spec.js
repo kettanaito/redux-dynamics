@@ -1,6 +1,15 @@
 import { expect } from 'chai';
 import { createAction } from '../src';
 
+// createAction.configure({
+//     types: {
+//         request: 'REQUEST',
+//         success: 'SUCCESS',
+//         error: 'ERROR',
+//         failure: 'FAILURE'
+//     }
+// })
+
 describe('Create action', () => {
     it('Can be imported/required', () => {
         return expect(createAction).to.not.be.undefined;
@@ -28,5 +37,5 @@ describe('Create action', () => {
     it('Allows to create a plain action', () => {
         const myAction = createAction('COUNTER_INCREMENT', { format: false });
         return expect(myAction).to.equal('COUNTER_INCREMENT');
-    })
+    });
 });

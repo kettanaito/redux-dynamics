@@ -1,13 +1,14 @@
-/* Predefined action types */
-const actionTypes = {
-    request: 'REQUEST',
-    success: 'SUCCESS',
-    error: 'ERROR'
-};
-
 /* Set of default action creator options */
 const defaultOptions = {
-    format: (name, type) => `${name}_${type}`,
+    /* Predefined action types */
+    types: {
+        request: 'REQUEST',
+        success: 'SUCCESS',
+        error: 'ERROR'
+    },
+
+    /* Format function for each action type */
+    format: (name, type) => `${name}_${type}`
 };
 
 /**
@@ -22,6 +23,7 @@ export function createAction(actionName, customOptions) {
 
     /* When custom format function is present, format the action types respectively */
     if (options.format) {
+        const { types: actionTypes } = options;
         const action = {};
 
         Object.keys(actionTypes).forEach((typeKey) => {
