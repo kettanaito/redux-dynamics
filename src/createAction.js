@@ -5,15 +5,16 @@ const actionTypes = {
     error: 'ERROR'
 };
 
+/* Set of default action creator options */
 const defaultOptions = {
-    format: `{name}_{type}`
+    format: (name, type) => `${name}_${type}`
 };
 
 /**
  * Create action
  * @description Shorthand method to create an action Object.
  * @param {String} actionName - The name of the action (i.e. "GET_AUTHOR").
- * @param {Object} customOptions
+ * @param {Object} customOptions - Options to apply to the action creator.
  * @return {Object}
  */
 export function createAction(actionName, customOptions) {
@@ -22,7 +23,7 @@ export function createAction(actionName, customOptions) {
 
     Object.keys(actionTypes).forEach((typeKey) => {
         const typeValue = actionTypes[typeKey];
-        action[typeKey] = options.format.replace('{name}', actionName).replace('{type}', typeValue);
+        action[typeKey] = options.format(actionName, typeValue);
     });
 
     return action;

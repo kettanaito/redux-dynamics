@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { createAction } from '../src';
 
 describe('Create action', () => {
-    it('Can be required/imported', () => {
+    it('Can be imported/required', () => {
         return expect(createAction).to.not.be.undefined;
     });
 
