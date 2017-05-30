@@ -20,6 +20,8 @@ export function createReducer(args = defaultArgs) {
   }
 
   return (state, action) => {
+    const dispatchedType = action.type;
+
     /* Duplicate the state for further changes */
     let newState = state || initialState;
 
@@ -34,7 +36,7 @@ export function createReducer(args = defaultArgs) {
       const isRegExp = (expectedType instanceof RegExp);
 
       /* Determine if dispatched action type is expected */
-      const shouldActionPass = isRegExp ? expectedType.test(action.type) : expectedType.includes(action.type);
+      const shouldActionPass = isRegExp ? expectedType.test(dispatchedType) : expectedType.includes(dispatchedType);
 
       /* Mutate the state once dispatched action type is expected */
       if (shouldActionPass) {
