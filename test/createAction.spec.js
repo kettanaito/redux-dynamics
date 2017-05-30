@@ -19,4 +19,14 @@ describe('Create action', () => {
             expect(myAction).to.have.property('error', 'GET_AUTHOR_ERROR')
         );
     });
+
+    /**
+     * When needed, it should be possible to create a plain action.
+     * This means that the action will not be extended by the predefined action types,
+     * but will remain as provided.
+     */
+    it('Allows to create a plain action', () => {
+        const myAction = createAction('COUNTER_INCREMENT', { format: false });
+        return expect(myAction).to.equal('COUNTER_INCREMENT');
+    })
 });

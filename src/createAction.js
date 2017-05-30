@@ -7,7 +7,7 @@ const actionTypes = {
 
 /* Set of default action creator options */
 const defaultOptions = {
-    format: (name, type) => `${name}_${type}`
+    format: (name, type) => `${name}_${type}`,
 };
 
 /**
@@ -19,12 +19,20 @@ const defaultOptions = {
  */
 export function createAction(actionName, customOptions) {
     const options = Object.assign({}, defaultOptions, customOptions);
-    let action = {};
 
-    Object.keys(actionTypes).forEach((typeKey) => {
-        const typeValue = actionTypes[typeKey];
-        action[typeKey] = options.format(actionName, typeValue);
-    });
+    /* When custom format function is present, format the action types respectively */
+    if (options.format) {
+        const action = {};
 
-    return action;
+        Object.keys(actionTypes).forEach((typeKey) => {
+            const typeValue = actionTypes[typeKey];
+            action[typeKey] = options.format(actionName, typeValue);
+        });
+
+        return action;
+
+    /* Otherwise return a plain action type */
+    } else {
+        return actionName;
+    }
 }
