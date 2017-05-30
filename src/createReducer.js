@@ -31,18 +31,10 @@ export function createReducer(args = defaultArgs) {
     /* Iterate through each specified action */
     actions.forEach((expectedAction) => {
       const expectedType = expectedAction.type;
+      const isRegExp = (expectedType instanceof RegExp);
 
-      /* By default, perform simple comparison */
-      let shouldActionPass = (action.type === expectedType);
-
-      /* Otherwise check advanced expected types */
-      if (!shouldActionPass) {
-        if (Array.isArray(expectedType)) {
-          shouldActionPass = expectedType.includes(action.type);
-        } else if (expectedType instanceof RegExp) {
-          shouldActionPass = expectedType.test(action.type);
-        }
-      }
+      /* Determine if dispatched action type is expected */
+      const shouldActionPass = isRegExp ? expectedType.test(action.type) : expectedType.includes(action.type);
 
       /* Mutate the state once dispatched action type is expected */
       if (shouldActionPass) {
