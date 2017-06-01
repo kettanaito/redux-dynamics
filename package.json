@@ -25,6 +25,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "test:coverage": "istanbul cover _mocha -- --compilers js:babel-register",
+    "flow": "flow",
     "build": "webpack",
     "prepublish": "npm run test && npm run build"
   },
@@ -35,8 +36,10 @@
     "babel-cli": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.4.0",
+    "babel-preset-flow": "^6.23.0",
     "chai": "^3.5.0",
     "coveralls": "^2.13.1",
+    "flow-bin": "^0.47.0",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.4.1",
     "redux": "^3.6.0",
