@@ -2,4 +2,5 @@ docs
 coverage
 .babelrc
 .travis.yml
+.flowconfig
 webpack.*
