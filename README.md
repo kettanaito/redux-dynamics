@@ -28,7 +28,7 @@ import { createReducer } from 'redux-dynamics';
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
 * Supports RegExp as expected action type
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)
-* [Usage examples](./docs/createReducer.md)
+* [Usage examples](./docs/api/createReducer.md)
 
 ## Documentation
 For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).
