@@ -10,5 +10,6 @@
       }
     ],
     "flow"
-  ]
+  ],
+  "plugins": ["transform-object-rest-spread"]
 }
