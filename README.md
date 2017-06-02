@@ -28,36 +28,7 @@ import { createReducer } from 'redux-dynamics';
 * Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
 * Supports RegExp as expected action type
 * No need to explicitly return state, it is always returned by default (in case not modified by any action)
-```js
-import { createReducer } from 'redux-dynamics';
+* [Usage examples](./docs/createReducer.md)
 
-export default createReducer({
-  initialState: {
-    isFetching: false,
-    errors: [],
-    author: undefined,
-    postCount: 0
-  },
-  actions: [
-    {
-      type: 'GET_AUTHOR_REQUEST',
-      reducer: state => state.set('isFetching', true)
-    },
-    {
-      type: 'GET_AUTHOR_SUCCESS',
-      reducer: (state, action) => state.set('author', action.getIn(['payload', 'body'])
-    },
-    {
-      type: ['GET_AUTHOR_SUCCESS', 'GET_AUTHOR_ERROR'],
-      reducer: state => state.set('isFetching', false)
-    },
-    {
-      type: /_(ERROR|FAILURE)$/,
-      reducer: (state, action) => {
-        const errorMessage = action.getIn(['payload', 'body', 'message']);
-        return state.update('errors', errors => errors.push(errorMessage));
-      }
-    }
-  ]
-});
-```
+## Documentation
+For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).
