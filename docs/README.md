@@ -1,9 +1,9 @@
 # Documentation
 
 ## Table of content
-0. Getting started
-0. API
-  0. Create action
-  0. [Create reducer](./createReducer.md)
-0. Troubleshooting
-0. Contribution
+1. Getting started
+2. API
+    1. Create action
+    2. [Create reducer](./createReducer.md)
+3. Troubleshooting
+4. Contribution

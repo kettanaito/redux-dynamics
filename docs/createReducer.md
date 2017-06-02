@@ -16,6 +16,7 @@
 * Ensures `initialState` immutability
 * Ensures `action` immutability
 * Provides individual scope for each `reducer` function
+* Supports RegExp for expected action types
 * Always returns pristine `state` when no expected actions dispatched
 
 ### Arguments
