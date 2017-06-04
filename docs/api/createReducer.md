@@ -3,21 +3,13 @@
 ## Specification
 `createReducer` is an abstraction function which returns another function (reducer function) with the predefined logic of handling dispatched actions.
 
-> The motivation behind this kind of abstraction was a widely repeated code whenever we were creating reducers in our projects. Each dedicated reducer file consisted of the following repetitive parts:
-* Define initial state
-* Logic to fallback to Immutable instance when mutable state is being passed into reducer function
-* `switch` statement for handling different dispatched action types
+> A motivation behind this kind of abstraction came from the personal experience. Each time we were creating reducers we were repeating the same chunks of code over and over. While this is not a big issue at first, you may find yourself in a lot of repetitions once your application starts to grow.
+
+This abstraction brings this repetitive logic one level up:
+* Defining initial state
+* Ensuring immutability of the state whenever passed to the reducer function
+* Providing independent scope for each `reducer` function (contrary to using `switch` statement)
 * Returning pristine state by default
-
-> Slowly it lead to reducer functions being rather big due to constant repetitions. This abstraction layer aims to get rid of the repetitive code by moving it into the high-order function, while preserving the immutability and flexibility.
-
-### Features
-* Simplifies `initialState` declaration
-* Ensures `initialState` immutability
-* Ensures `action` immutability
-* Provides individual scope for each `reducer` function
-* Supports RegExp for expected action types
-* Always returns pristine `state` when no expected actions dispatched
 
 ### Arguments
 `createReducer` accepts only one argument which is an Object of the following shape:
@@ -115,7 +107,89 @@ export default createReducer({
 })
 ```
 
+## Comparison
+For the sake of comparison, consider these two declarations of a simple `blog` reducer, which are exactly identical in their mechanics:
+### Before
+```js
+// reducers/blog/index.js
+import { fromJS } from 'immutable';
+
+const initialState = {
+  isFetching: false,
+  posts: []
+};
+
+export default function blog(state = initialState, action) {
+  switch(action.type) {
+    case: 'GET_POSTS_REQUEST':
+      return state.set('isFetching', true);
+
+    case: 'GET_POSTS_SUCCESS':
+      const posts = fromJS(action.payload.body);
+      return state.set('posts', posts);
+
+    case: 'GET_POSTS_ERROR':
+      return state.set('isFetching', false);
+
+    case: 'GET_POSTS_FAILURE':
+      return state.set('isFetching', false);
+
+    case: 'ANOTHER_POST_ACTION':
+      const posts = fromJS(action.payload.body); // error: "posts" already defined
+      return state.update('posts', allPosts => allPosts.push(posts));
+
+    default: // repeats in each reducer function
+      return state;
+  }
+}
+```
+
+### After
+```js
+// reducers/blog/index.js
+import { createReducer } from 'redux-dynamics';
+
+export default createReducer({
+  /* Ensured state immutability */
+  initialState: {
+    isFetching: false,
+    posts: []
+  },
+  actions: [
+    {
+      type: 'GET_POSTS_REQUEST',
+      reducer: state => state.set('isFetching', true)
+    },
+    {
+      /* Matching logic applied toward {action.type} automatically */
+      type: 'GET_POSTS_SUCCESS',
+      reducer: (state, action) => {
+        /* Action is always immutable as well */
+        const posts = action.getIn(['payload', 'body']);
+        return state.set('posts', posts);
+      }
+    },
+    {
+      /* Same reducer function for multiple ation types */
+      type: /GET_POSTS_(ERROR|FAILURE)/,
+      reducer: state => state.set('isFetching', false)
+    },
+    {
+      type: 'ANOTHER_POST_ACTION',
+      reducer: (state, action) => {
+        /* No conflicts due to separate function scopes */
+        const posts = action.getIn(['payload', 'body']);
+        return state.update('posts', allPosts => allPosts.push(posts));
+      }
+    }
+  ]
+})
+```
+
 ## Useful resources
-`createReducer` is very simple for those familiar with working with Redux and using Immutable instances. Make sure you are comfortable with those before using it to the fullest.
+Using `createReducer` should be quite simple for those familiar with Redux and usage of Immutable. It is strongly recommended to read the documentation about the latter before you may use this library to its fullest.
 * [Redux documentation](http://redux.js.org/)
 * [ImmutableJS](https://facebook.github.io/immutable-js/docs/#/)
+
+## Contribution
+Feel confident about missing functionality for this method? Submit a new [Pull request](https://github.com/kettanaito/redux-dynamics/pulls) and become a contributor right now.
