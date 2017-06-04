@@ -116,6 +116,7 @@ import { fromJS } from 'immutable';
 
 const initialState = {
   isFetching: false,
+  errors: {},
   posts: []
 };
 
@@ -129,7 +130,9 @@ export default function blog(state = initialState, action) {
       return state.set('posts', posts);
 
     case: 'GET_POSTS_ERROR':
-      return state.set('isFetching', false);
+      return state
+        .set('isFetching', false) // logic which may be unified
+        .merge('errors', fromJS(action.payload.error));
 
     case: 'GET_POSTS_FAILURE':
       return state.set('isFetching', false);
@@ -150,41 +153,42 @@ export default function blog(state = initialState, action) {
 import { createReducer } from 'redux-dynamics';
 
 export default createReducer({
-  /* Ensured state immutability */
-  initialState: {
+  initialState: { // Ensured state immutability
     isFetching: false,
+    errors: {},
     posts: []
   },
   actions: [
     {
-      type: 'GET_POSTS_REQUEST',
+      type: 'GET_POSTS_REQUEST', // Matching logic applied toward {action.type} automatically
       reducer: state => state.set('isFetching', true)
     },
     {
-      /* Matching logic applied toward {action.type} automatically */
       type: 'GET_POSTS_SUCCESS',
       reducer: (state, action) => {
-        /* Action is always immutable as well */
-        const posts = action.getIn(['payload', 'body']);
+        const posts = action.getIn(['payload', 'body']); // Action is always immutable as well
         return state.set('posts', posts);
       }
     },
     {
-      /* Same reducer function for multiple ation types */
-      type: /GET_POSTS_(ERROR|FAILURE)/,
+      type: 'GET_POSTS_ERROR',
+      reducer: (state, action) => state.merge('errors', fromJS(action.payload.error))
+    }
+    {
+      type: /GET_POSTS_(ERROR|FAILURE)/, // Same reducer function for multiple action types
       reducer: state => state.set('isFetching', false)
     },
     {
       type: 'ANOTHER_POST_ACTION',
       reducer: (state, action) => {
-        /* No conflicts due to separate function scopes */
-        const posts = action.getIn(['payload', 'body']);
+        const posts = action.getIn(['payload', 'body']); // No conflicts due to separate function scopes
         return state.update('posts', allPosts => allPosts.push(posts));
       }
     }
   ]
-})
+});
 ```
+**Note:** This is an example of my personal usage and may not match with how you used to write reducers in your applications. This library does not position itself as a panacea, but rather a collection of useful methods which should be used appropriately, when applicable.
 
 ## Useful resources
 Using `createReducer` should be quite simple for those familiar with Redux and usage of Immutable. It is strongly recommended to read the documentation about the latter before you may use this library to its fullest.
