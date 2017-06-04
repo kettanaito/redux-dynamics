@@ -112,7 +112,7 @@ For the sake of comparison, consider these two declarations of a simple `blog` r
 ### Before
 ```js
 // reducers/blog/index.js
-import { fromJS } from 'immutable';
+import { Iterable, fromJS } from 'immutable';
 
 const initialState = {
   isFetching: false,
@@ -121,6 +121,8 @@ const initialState = {
 };
 
 export default function blog(state = initialState, action) {
+  if (!Iterable.isIterable(state)) { return fromJS(state); } // repetitive ensuring state immutability
+
   switch(action.type) {
     case: 'GET_POSTS_REQUEST':
       return state.set('isFetching', true);
@@ -184,7 +186,7 @@ export default createReducer({
         const posts = action.getIn(['payload', 'body']); // No conflicts due to separate function scopes
         return state.update('posts', allPosts => allPosts.push(posts));
       }
-    }
+    } // no explicit return of pristine state
   ]
 });
 ```
