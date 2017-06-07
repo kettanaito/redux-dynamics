@@ -1,5 +1,5 @@
 /* @flow */
-import { Iterable, fromJS } from 'immutable';
+import { Iterable, Map, fromJS } from 'immutable';
 import { ReduxAction, CreateReducerArgs } from './interfaces';
 
 const defaultArgs: CreateReducerArgs = {
@@ -20,8 +20,10 @@ export function createReducer(args: CreateReducerArgs = defaultArgs) {
     throw Error(`Shorthand reducer should have {actions} property specified, but received: ${actions}.`);
   }
 
-  return (state: Object, action: ReduxAction) => {
-    const dispatchedType = action.type;
+  return (state: Object, dispatchedAction: ReduxAction) => {
+    /* Convert action to immutable */
+    const action = Map(dispatchedAction);
+    const dispatchedType = action.get('type');
 
     /* Duplicate the state for further changes */
     let newState = state || initialState;
@@ -41,7 +43,7 @@ export function createReducer(args: CreateReducerArgs = defaultArgs) {
 
       /* Mutate the state once dispatched action type is expected */
       if (shouldActionPass) {
-        newState = expectedAction.reducer(newState, fromJS(action));
+        newState = expectedAction.reducer(newState, action);
       }
     });
 
