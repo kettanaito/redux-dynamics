@@ -26,8 +26,7 @@ This abstraction brings this repetitive logic one level up:
      * Once the action with the expected type is dispatched,
      * the respective reducer function is being called.
      */
-    type: String | RegExp,
-
+    type: String | Array<String> | RegExp,
     /**
      * Reducer function
      * @param {Map} state Current state of the store.
@@ -124,22 +123,22 @@ export default function blog(state = initialState, action) {
   if (!Iterable.isIterable(state)) { return fromJS(state); } // repetitive ensuring state immutability
 
   switch(action.type) {
-    case: 'GET_POSTS_REQUEST':
+    case 'GET_POSTS_REQUEST':
       return state.set('isFetching', true);
 
-    case: 'GET_POSTS_SUCCESS':
+    case 'GET_POSTS_SUCCESS':
       const posts = fromJS(action.payload.body);
       return state.set('posts', posts);
 
-    case: 'GET_POSTS_ERROR':
+    case 'GET_POSTS_ERROR':
       return state
         .set('isFetching', false) // logic which may be unified
         .merge('errors', fromJS(action.payload.error));
 
-    case: 'GET_POSTS_FAILURE':
+    case 'GET_POSTS_FAILURE':
       return state.set('isFetching', false);
 
-    case: 'ANOTHER_POST_ACTION':
+    case 'ANOTHER_POST_ACTION':
       const posts = fromJS(action.payload.body); // error: "posts" already defined
       return state.update('posts', allPosts => allPosts.push(posts));
 
@@ -174,7 +173,7 @@ export default createReducer({
     },
     {
       type: 'GET_POSTS_ERROR',
-      reducer: (state, action) => state.merge('errors', fromJS(action.payload.error))
+      reducer: (state, action) => state.merge('errors', action.payload.error)
     }
     {
       type: /GET_POSTS_(ERROR|FAILURE)/, // Same reducer function for multiple action types
