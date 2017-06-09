@@ -66,13 +66,15 @@ describe('Create reducer', () => {
    * When no inital state is specified, should fallback to empty Object.
    */
   it('Fails to be created without arguments', () => {
+    let message = null;
+
     try {
-      const newReducer = createReducer();
+      createReducer({ initialState: {} });
     } catch(error) {
-      return true;
+      message = error;
     }
 
-    return false;
+    return expect(message).to.be.instanceOf(Error);
   });
 
   /**

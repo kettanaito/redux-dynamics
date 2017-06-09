@@ -14,7 +14,7 @@ const defaultArgs: CreateReducerArgs = {
  * @return {Function} Reducer function.
  */
 export function createReducer(args: CreateReducerArgs = defaultArgs) {
-  let { initialState, actions } = args;
+  const { initialState, actions } = args;
 
   if (!actions) {
     throw Error(`Shorthand reducer should have {actions} property specified.`);
