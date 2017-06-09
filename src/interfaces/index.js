@@ -1,3 +1,5 @@
+/* @flow */
+
 /**
  * Redux: dispatched action
  */
@@ -8,10 +10,12 @@ export interface ReduxAction {
 /**
  * Create reducer: arguments
  */
+interface ExpectedActions {
+  type: String | RegExp,
+  reducer: Function
+};
+
 export interface CreateReducerArgs {
-  initialState: Object,
-  actions?: interface ExpectedActions {
-    type: String | RegExp,
-    reducer: Function
-  }
+  initialState?: Object,
+  actions: Array<ExpectedActions>
 };
