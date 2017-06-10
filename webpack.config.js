@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const package = JSON.parse(fs.readFileSync('./package.json'));
 
 module.exports = {
-  entry: path.resolve(__dirname, package.module),
+  entry: path.resolve(__dirname, './src/index.js'),
   output: {
     path: __dirname,
     filename: package.main,

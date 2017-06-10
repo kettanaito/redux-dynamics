@@ -1,6 +1,13 @@
-docs
-coverage
+# Source files
+src
+
+# Configurations
 .babelrc
 .travis.yml
 .flowconfig
 webpack.*
+
+# Documentation & statistics
+docs
+test
+coverage
