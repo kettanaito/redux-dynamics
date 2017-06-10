@@ -1,10 +1,10 @@
 /* @flow */
-import { CreateActionOptions } from './interfaces';
+import type { CreateActionOptions, ActionClasses } from './interfaces';
 
 /* Set of default action creator options */
 const defaultOptions: CreateActionOptions = {
   /* Predefined action types */
-  types: {
+  types: ActionClasses = {
     request: 'REQUEST',
     success: 'SUCCESS',
     error: 'ERROR'
@@ -21,12 +21,12 @@ const defaultOptions: CreateActionOptions = {
  * @param {CreateActionOptions} customOptions - Options to apply to the action creator.
  * @return {Object} Composed action types Object.
  */
-export function createAction(actionName: String, customOptions: CreateActionOptions) {
+export function createAction(actionName: string, customOptions: CreateActionOptions): Object {
   const options = Object.assign({}, defaultOptions, customOptions);
   const { types, format } = options;
   const action = {};
 
-  Object.keys(types).forEach((typeKey) => {
+  Object.keys(types).forEach((typeKey: string) => {
     const typeValue = types[typeKey];
     action[typeKey] = format(actionName, typeValue);
   });
