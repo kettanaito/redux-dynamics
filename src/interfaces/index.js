@@ -10,12 +10,12 @@ export interface ReduxAction {
 /**
  * Create reducer: arguments
  */
-interface ExpectedActions {
-  type: String | RegExp,
+interface ExpectedAction {
+  type: RegExp | Array<String> | String,
   reducer: Function
 };
 
 export interface CreateReducerArgs {
   initialState?: Object,
-  actions: Array<ExpectedActions>
+  actions: Array<ExpectedAction>
 };

@@ -22,7 +22,7 @@ import { createReducer } from 'redux-dynamics';
 ```
 
 ## Methods
-### `createReducer({ initialState<Object>, actions<Array> })`
+### `createReducer({ initialState: Object, actions: Array<ExpectedAction> })`
 * Simplifies declaration of `initialState`
 * Enforces immutability of the state (using [Immutable](https://facebook.github.io/immutable-js))
 * Enforces immutability of the action for seamless operations with the state
