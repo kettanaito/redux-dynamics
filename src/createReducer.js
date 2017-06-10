@@ -3,6 +3,7 @@ import { Iterable, Map, fromJS } from 'immutable';
 import { ReduxAction, CreateReducerArgs } from './interfaces';
 
 const defaultArgs: CreateReducerArgs = {
+  initialState: {},
   actions: []
 };
 

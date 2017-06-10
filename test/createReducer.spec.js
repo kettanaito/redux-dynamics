@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import { expect } from 'chai';
 import { createStore } from 'redux';
 import { createReducer } from '../src';
@@ -78,12 +79,32 @@ describe('Create reducer', () => {
   });
 
   /**
+   * When no arguments are passed to {createReducer}, it should be initialized with
+   * the default arguments.
+   */
+  it('Creates with default arguments', () => {
+    const reducer = createReducer();
+    const tempStore = createStore(reducer);
+    const state = tempStore.getState();
+    return expect(state).to.not.be.undefined;
+  });
+
+  /**
    * Initial state passed to the method should propagate to Redux state.
    */
   it('Propagates initial state', () => {
     const state = store.getState();
 
     return expect(state.get('counter')).to.equal(0);
+  });
+
+  /**
+   * Whenever created a new reducer, {createReducer} should ensure state is always
+   * an instance of Immutable.
+   */
+  it('Esnures state immutability', () => {
+    const state = store.getState();
+    return expect(state).to.be.instanceOf(Map);
   });
 
   /**
