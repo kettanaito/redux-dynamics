@@ -3,16 +3,16 @@
 ![Dependencies Status](https://david-dm.org/kettanaito/redux-dynamics.svg)
 
 # Redux dynamics
-A collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more comfortable.
+Strongly-typed collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more dynamic.
 
 ## Getting started
-Install `redux-dynamics` through npm:
+Install `redux-dynamics` using npm:
 ```
 npm install redux-dynamics --save-dev
 ```
 Include it in your project:
 ```js
-/* VanillaJS */
+/* ES5 */
 const reduxDynamics = require('redux-dynamics');
 const createReducer = require('redux-dynamics').createReducer;
 
@@ -22,14 +22,16 @@ import { createReducer } from 'redux-dynamics';
 ```
 
 ## Methods
-### `createReducer({ initialState: Object, actions: Array<ExpectedAction> })`
-* Simplifies declaration of `initialState`
-* Enforces immutability of the state (using [Immutable](https://facebook.github.io/immutable-js))
-* Enforces immutability of the action for seamless operations with the state
-* Scoped variables and logic (compared to `switch` statements where you cannot have multiple variables with the same name under single reducer)
-* Supports RegExp as expected action type
-* No need to explicitly return state, it is always returned by default (in case not modified by any action)
-* See more information, as well as examples, in the [Documentation](./docs/api/createReducer.md)
+### `createReducer({ initialState?: State, actions: Array<ExpectedAction> })`
+#### Features:
+* Simplified declaration of initial state
+* Enforced immutability of the `state` (using [Immutable](https://facebook.github.io/immutable-js))
+* Enforced immutability of the `action` for seamless integration with the state
+* Scoped variables and logic for reducer functions
+* Support of `RegExp` as an expected action type
+* No explicit state return, it is always returned by default
+
+See [`createReducer` documentation](./docs/api/createReducer.md).
 
 ## Documentation
 For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).

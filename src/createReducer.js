@@ -1,6 +1,11 @@
 /* @flow */
 import { Iterable, Map, fromJS } from 'immutable';
-import { ReduxAction, CreateReducerArgs } from './interfaces';
+import type { State, ReduxAction, ExpectedAction } from './interfaces';
+
+type CreateReducerArgs = {
+  initialState?: State,
+  actions: Array<ExpectedAction>
+};
 
 const defaultArgs: CreateReducerArgs = {
   initialState: {},
@@ -14,14 +19,14 @@ const defaultArgs: CreateReducerArgs = {
  * @param {CreateReducerArgs} args
  * @return {Function} Reducer function.
  */
-export function createReducer(args: CreateReducerArgs = defaultArgs) {
+export function createReducer(args: CreateReducerArgs = defaultArgs): State {
   const { initialState, actions } = args;
 
   if (!actions) {
     throw Error(`Shorthand reducer should have {actions} property specified.`);
   }
 
-  return (state: Map<String, any> | Object, dispatchedAction: ReduxAction) => {
+  return (state: State, dispatchedAction: ReduxAction): State => {
     /* Convert action to immutable */
     const action = fromJS(dispatchedAction);
     const dispatchedType = action.get('type');
