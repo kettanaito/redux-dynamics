@@ -1,3 +1,4 @@
+![Package version](https://badge.fury.io/js/redux-dynamics.svg)
 [![Build Status](https://travis-ci.org/kettanaito/redux-dynamics.svg?branch=master)](https://travis-ci.org/kettanaito/redux-dynamics)
 [![Coverage Status](https://coveralls.io/repos/github/kettanaito/redux-dynamics/badge.svg)](https://coveralls.io/github/kettanaito/redux-dynamics)
 ![Dependencies Status](https://david-dm.org/kettanaito/redux-dynamics.svg)
