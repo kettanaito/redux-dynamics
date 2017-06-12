@@ -1,20 +1,16 @@
 /* @flow */
-
-export interface ActionClasses {
+/* Type of the action classes collection */
+export type ActionClasses = {
   [actionClass: string]: string
 };
 
-/**
- * Options
- */
+/* Options interface */
 export interface CreateActionOptions {
   types: ActionClasses,
   format: (name: string, type: string) => string
 };
 
-/**
- * Instance of created action
- */
-export interface CreatedAction {
+/* Instance of the created action */
+export type CreatedAction = {
   +[actionClass: string]: string
 };
