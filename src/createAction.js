@@ -17,18 +17,18 @@ const defaultOptions: CreateActionOptions = {
 /**
  * Create action
  * @description Shorthand method to create an action Object.
- * @param {String} actionName - The name of the action (i.e. "GET_AUTHOR").
- * @param {CreateActionOptions} customOptions - Options to apply to the action creator.
+ * @param {String} name - The name of the action (i.e. "GET_AUTHOR").
+ * @param {CreateActionOptions} options - Options to apply to the action creator.
  * @return {Object} Composed action types Object.
  */
-export function createAction(actionName: string, customOptions: CreateActionOptions): CreatedAction {
-  const options: CreateActionOptions = Object.assign({}, defaultOptions, customOptions);
-  const { types, format } = options;
+export function createAction(name: string, options: CreateActionOptions): CreatedAction {
+  const endOptions: CreateActionOptions = Object.assign({}, defaultOptions, options);
+  const { types, format } = endOptions;
   const action = {};
 
-  Object.keys(types).forEach((typeKey: string) => {
+  Object.keys(types).forEach((typeKey) => {
     const typeValue: string = types[typeKey];
-    action[typeKey] = format(actionName, typeValue);
+    action[typeKey] = format(name, typeValue);
   });
 
   return action;

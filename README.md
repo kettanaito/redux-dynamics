@@ -23,7 +23,7 @@ import { createReducer } from 'redux-dynamics';
 ```
 
 ## Methods
-### `createAction(actionName: string, customOptions: object)`
+### `createAction(name: string, options: CreateActionOptions)`
 #### Features:
 * Simplified creation of action types by reusing predefined action classes (i.e. `request`, `success`, `error`)
 * Ensured consistency and maintainability of action types
