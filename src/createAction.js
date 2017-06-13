@@ -17,8 +17,8 @@ const defaultOptions: CreateActionOptions = {
 /**
  * Create action
  * @description Shorthand method to create an action Object.
- * @param {String} name - The name of the action (i.e. "GET_AUTHOR").
- * @param {CreateActionOptions} options - Options to apply to the action creator.
+ * @param {String} name The name of the action (i.e. "GET_AUTHOR").
+ * @param {CreateActionOptions} options Options to apply to the action creator.
  * @return {Object} Composed action types Object.
  */
 export function createAction(name: string, options: CreateActionOptions): CreatedAction {
