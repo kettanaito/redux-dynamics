@@ -16,7 +16,9 @@ const defaultOptions: CreateActionOptions = {
 
 /**
  * Create action
- * @description Shorthand method to create an action Object.
+ * @description Shorthand method to create an action Object. Actions created with this method
+ * are ensured to have predefined action classes by automaticly appending them to the action's name.
+ * This method is primarily designed to be used with a dedicated async middleware.
  * @param {String} name The name of the action (i.e. "GET_AUTHOR").
  * @param {CreateActionOptions} options Options to apply to the action creator.
  * @return {Object} Composed action types Object.
