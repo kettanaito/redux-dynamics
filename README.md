@@ -36,3 +36,8 @@ See [`createReducer` documentation](./docs/api/createReducer.md).
 
 ## Documentation
 For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).
+
+## Contributing
+Feel free to submit your ideas on enhanced Redux workflow in a form of [Pull request](https://github.com/kettanaito/redux-dynamics/pulls) for this repository.
+
+In case discovered a bug, outdated documentation or any other mismatch, please [create a new Issue](https://github.com/kettanaito/redux-dynamics/issues).
