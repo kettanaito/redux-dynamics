@@ -32,6 +32,9 @@ describe('Create action', () => {
       format: (name, type) => `${name}+${type}`
     });
 
-    return expect(myAction).to.have.property('request', 'GET+POSTS+REQUEST');
+    return (
+        expect(myAction).to.have.all.keys('request') &&
+        expect(myAction).to.have.property('request', 'GET+POSTS+REQUEST')
+    );
   });
 });
