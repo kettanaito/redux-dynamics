@@ -8,9 +8,10 @@ Strongly-typed collection of useful methods and tools to make your [Redux](http:
 
 ## Getting started
 Install `redux-dynamics` using npm:
+```basg
+npm install redux-dynamics --save
 ```
-npm install redux-dynamics --save-dev
-```
+
 Include it in your project:
 ```js
 /* ES5 */
@@ -38,6 +39,6 @@ See [`createReducer` documentation](./docs/api/createReducer.md).
 For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).
 
 ## Contributing
-Feel free to submit your ideas on enhanced Redux workflow in a form of [Pull request](https://github.com/kettanaito/redux-dynamics/pulls) for this repository.
+Feel free to submit your ideas on enhanced Redux workflow by issuing a [Pull request](https://github.com/kettanaito/redux-dynamics/pulls).
 
-In case discovered a bug, outdated documentation or any other mismatch, please [create a new Issue](https://github.com/kettanaito/redux-dynamics/issues).
+In case you have discovered a bug, outdated documentation or any other mismatch, please [create a new Issue](https://github.com/kettanaito/redux-dynamics/issues).
