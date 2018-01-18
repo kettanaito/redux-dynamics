@@ -1,9 +1,0 @@
-[ignore]
-./lib
-./coverage
-
-[include]
-
-[libs]
-
-[options]

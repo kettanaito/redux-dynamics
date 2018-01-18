@@ -4,7 +4,7 @@ src
 # Configurations
 .babelrc
 .travis.yml
-.flowconfig
+tsconfig.json
 webpack.*
 
 # Documentation & statistics

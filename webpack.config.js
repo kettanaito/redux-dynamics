@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const package = JSON.parse(fs.readFileSync('./package.json'));
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, './src/index.ts'),
   output: {
     path: __dirname,
     filename: package.main,
@@ -28,13 +28,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: [/node_modules/],
-        use: ['babel-loader']
+        test: /\.ts$/i,
+        exclude: /node_modules/,
+        use: ['babel-loader', 'awesome-typescript-loader']
       },
     ]
   },
   externals: {
     immutable: "immutable"
+  },
+  resolve: {
+    extensions: ['.ts']
   }
 };
