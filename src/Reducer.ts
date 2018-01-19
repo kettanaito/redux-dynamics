@@ -1,34 +1,48 @@
-import { fromJS, Iterable, Map } from 'immutable';
+import { fromJS, Iterable } from 'immutable';
+import { Reducer as ReduxReducer, Action as ReduxAction } from 'redux';
 
-type ReduxState = Iterable<string, any> | any;
-type ReduxAction = typeof Map;
-type ReduxActionHandler = (state: ReduxState, action: ReduxAction, context: Object) => ReduxState;
+type ImmutableState = Iterable<any, any> | any;
+type ImmutableAction = typeof Iterable;
+type SubscriptionResolver = (state: ImmutableState, action: ImmutableAction, context: Object) => ImmutableState;
+type Subscription = {
+  action: RegExp | string,
+  resolver: SubscriptionResolver
+}
 
 export default class Reducer {
-  state: ReduxState;
+  state: ImmutableState;
   context: Object;
-  subscriptions: any[];
+  subscriptions: Subscription[];
 
-  constructor(initialState: ReduxState) {
+  constructor(initialState: ImmutableState) {
     this.state = Iterable.isIterable(initialState) ? initialState : fromJS(initialState);
     this.context = {};
     this.subscriptions = [];
     return this;
   }
 
-  subscribe(action: string, handler: ReduxActionHandler) {
-    this.subscriptions.push({ action, handler });
+  /**
+   * Subscribes reducer to the provided action.
+   */
+  subscribe(action: string, resolver: SubscriptionResolver) {
+    this.subscriptions.push({ action, resolver });
     return this;
   }
 
-  toFunction() {
+  /**
+   * Converts Reducer class to the plain function expected by the
+   * Redux's "createStore" function.
+   */
+  toFunction(): ReduxReducer<ReduxAction> {
     return (state, action) => {
-      console.log('action:', action);
-
       this.subscriptions.forEach((subscription) => {
-        /* React to the dispatched action only */
-        if (subscription.action === action.type) {
-          this.state = subscription.handler(this.state, action, this.context);
+        const { action: subscribedAction } = subscription;
+        const shouldResolve = (subscribedAction instanceof RegExp)
+          ? subscribedAction.test(action.type)
+          : (subscribedAction === action.type);
+
+        if (shouldResolve) {
+          this.state = subscription.resolver(this.state, fromJS(action), this.context);
         }
       });
 
