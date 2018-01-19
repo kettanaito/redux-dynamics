@@ -6,34 +6,61 @@
 # Redux dynamics
 Strongly-typed collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more dynamic.
 
+## Features
+* `state` is always immutable
+* `action` is always immutable
+* `context` shared between all subscriptions
+* Declarative reducer subscriptions to the actions
+* Encouragement of pure resolver functions
+* Accept `RegExp` as subscribed action type
+* **No huge `switch` statements anymore!**
+
 ## Getting started
-Install `redux-dynamics` using npm:
-```basg
+
+### Install
+
+#### NPM:
+```bash
 npm install redux-dynamics --save
 ```
 
-Include it in your project:
-```js
-/* ES5 */
-const reduxDynamics = require('redux-dynamics');
-const createReducer = require('redux-dynamics').createReducer;
-
-/* ES6+ */
-import reduxDynamics from 'redux-dynamics';
-import { createReducer } from 'redux-dynamics';
+#### Yarn:
+```bash
+yarn add redux-dynamics
 ```
 
-## Methods
-### `createReducer({ initialState?: State, actions: Array<ExpectedAction> })`
-#### Features:
-* Simplified declaration of initial state
-* Enforced immutability of the `state` (using [Immutable](https://facebook.github.io/immutable-js))
-* Enforced immutability of the `action` for seamless integration with the state
-* Scoped variables and logic for reducer functions
-* Support of `RegExp` as an expected action type
-* No explicit state return, it is always returned by default
+### Create a reducer
 
-See [`createReducer` documentation](./docs/api/createReducer.md).
+```js
+// store/comments/index.js
+import { Reducer } from 'redux-dynamics';
+
+/* Create a new reducer with initial state */
+const reducer = new Reducer({
+  likes: 0
+});
+
+/* Subscribe to action types */
+reducer.subscribe('ADD_LIKES', (state, action, context) => {
+  /* Note how both "state" and "action" are immutable */
+  const nextLikes = state.get('likes') + action.get('amount');
+
+  /* Resolve the next state */
+  return state.set('likes', nextLikes);
+});
+```
+
+### Connect to the Redux
+```js
+// store/reducer.js
+import { createReducer } from 'redux';
+import commentsReducer from './comments';
+
+export default createReducer({
+  /* Convert "Reducer" class into pure function */
+  comments: commentsReducer.toFunction()
+});
+```
 
 ## Documentation
 For more details on methods, usage examples and troubleshooting [see the Documentation](./docs).
