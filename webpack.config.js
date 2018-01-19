@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
+const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const package = JSON.parse(fs.readFileSync('./package.json'));
 
 module.exports = {
@@ -13,15 +15,10 @@ module.exports = {
     umdNamedDefine: true
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      mangle: false,
-      comments: false,
-      screw_ie8: true,
-      compress: {
-        drop_console: true,
-        screw_ie8: true,
-        warnings: false
+    new BabelMinifyPlugin({
+      removeDebugger: true,
+      mangle: {
+        topLevel: true
       }
     })
   ],
