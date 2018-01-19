@@ -26,7 +26,7 @@
     "test:coverage": "istanbul cover _mocha -- --compilers js:babel-register",
     "flow": "flow",
     "build": "webpack",
-    "prepublish": "npm run test && npm run build"
+    "prepublish": "npm run build && npm test"
   },
   "dependencies": {
     "immutable": "^3.8.1"
