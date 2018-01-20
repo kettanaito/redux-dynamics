@@ -3,17 +3,18 @@
 [![Coverage Status](https://coveralls.io/repos/github/kettanaito/redux-dynamics/badge.svg)](https://coveralls.io/github/kettanaito/redux-dynamics)
 ![Dependencies Status](https://david-dm.org/kettanaito/redux-dynamics.svg)
 
-# Redux dynamics
+# redux-dynamics
 Strongly-typed collection of useful methods and tools to make your [Redux](http://redux.js.org/) workflow more dynamic.
 
 ## Features
+### Reducers
+* **No huge `switch` statements!**
 * `state` is always immutable
 * `action` is always immutable
 * `context` shared between all subscriptions
 * Declarative reducer subscriptions to the actions
 * Encouragement of pure resolver functions
-* Accept `RegExp` as subscribed action type
-* **No huge `switch` statements anymore!**
+* `RegExp` as expected action type
 
 ## Getting started
 
@@ -42,7 +43,7 @@ const reducer = new Reducer({
 
 /* Subscribe to action types */
 reducer.subscribe('ADD_LIKES', (state, action, context) => {
-  /* Note how both "state" and "action" are immutable */
+  /* Note that both "state" and "action" are immutable */
   const nextLikes = state.get('likes') + action.get('amount');
 
   /* Resolve the next state */
@@ -50,7 +51,7 @@ reducer.subscribe('ADD_LIKES', (state, action, context) => {
 });
 ```
 
-### Connect to the Redux
+### Connect to Redux
 ```js
 // store/reducer.js
 import { createReducer } from 'redux';
@@ -69,3 +70,6 @@ For more details on methods, usage examples and troubleshooting [see the Documen
 Feel free to submit your ideas on enhanced Redux workflow by issuing a [Pull request](https://github.com/kettanaito/redux-dynamics/pulls).
 
 In case you have discovered a bug, outdated documentation or any other mismatch, please [create a new Issue](https://github.com/kettanaito/redux-dynamics/issues).
+
+## License
+This library is licensed under [MIT license](./LICENSE).
