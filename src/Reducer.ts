@@ -38,13 +38,20 @@ export default class Reducer {
     return (state, action) => {
       this.subscriptions.forEach((subscription) => {
         const { action: subscribedAction } = subscription;
+        const { type: dispatchedType } = action;
 
         const shouldResolve = (subscribedAction instanceof RegExp)
-          ? subscribedAction.test(action.type)
-          : (subscribedAction === action.type);
+          ? subscribedAction.test(dispatchedType)
+          : (subscribedAction === dispatchedType);
 
         if (shouldResolve) {
-          this.state = subscription.resolver(this.state, fromJS(action), this.context);
+          const nextState = subscription.resolver(this.state, fromJS(action), this.context);
+
+          if (!nextState) {
+            throw new Error(`Expected reducer to return the next state, but got: ${nextState}. Check the return statement for the "${dispatchedType}" subscription.`);
+          }
+
+          this.state = nextState;
         }
       });
 

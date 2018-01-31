@@ -15,11 +15,13 @@ reducer.subscribe('ADD_COMMENT', (state, action, context) => {
 /* Create a new Redux store */
 const store = createStore(reducer.toFunction());
 
-describe('Reducer', () => {
+describe('General', () => {
   it('Library exports are fine', () => {
     return expect(Reducer).to.not.be.undefined;
   });
+});
 
+describe('Reducer', () => {
   /**
    * Initial state passed to the method should propagate to Redux state.
    */
@@ -59,6 +61,15 @@ describe('Reducer', () => {
     expect(state.get('comments').get(1)).to.equal('abc');
   });
 
+  it('Throw on subscription not returning the next state', () => {
+    const reducer = new Reducer({ prop: true });
+    reducer.subscribe('ACTION_ONE', () => {});
+
+    const store = createStore(reducer.toFunction());
+
+    expect(store.dispatch.bind(this, { type: 'ACTION_ONE' })).to.throw;
+  });
+
   it('Context is shared between different subscriptions', () => {
     const reducer = new Reducer({ someProp: true });
 
@@ -77,7 +88,7 @@ describe('Reducer', () => {
     reducer.subscribe('ACTION_THREE', (state, action, context) => {
       expect(context).to.not.have.property('firstProp');
       expect(context).to.have.property('secondProp', 'poo');
-      return state;
+      // return state;
     });
 
     const store = createStore(reducer.toFunction());
