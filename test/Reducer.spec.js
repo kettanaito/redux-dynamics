@@ -58,4 +58,32 @@ describe('Reducer', () => {
     expect(state.get('comments').get(0)).to.equal('foo');
     expect(state.get('comments').get(1)).to.equal('abc');
   });
+
+  it('Context is shared between different subscriptions', () => {
+    const reducer = new Reducer({ someProp: true });
+
+    reducer.subscribe('ACTION_ONE', (state, action, context) => {
+      context.firstProp = 'foo';
+      return state;
+    });
+
+    reducer.subscribe('ACTION_TWO', (state, action, context) => {
+      expect(context).to.have.property('firstProp', 'foo');
+      delete context.firstProp;
+      context.secondProp = 'poo';
+      return state;
+    });
+
+    reducer.subscribe('ACTION_THREE', (state, action, context) => {
+      expect(context).to.not.have.property('firstProp');
+      expect(context).to.have.property('secondProp', 'poo');
+      return state;
+    });
+
+    const store = createStore(reducer.toFunction());
+
+    store.dispatch({ type: 'ACTION_ONE' });
+    store.dispatch({ type: 'ACTION_TWO' });
+    store.dispatch({ type: 'ACTION_THREE' });
+  });
 });

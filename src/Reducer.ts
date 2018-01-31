@@ -1,6 +1,7 @@
 import { fromJS, Iterable } from 'immutable';
 import { Reducer as ReduxReducer, Action as ReduxAction } from 'redux';
 
+type InitialState = Object | any;
 type ImmutableState = Iterable<any, any> | any;
 type ImmutableAction = typeof Iterable;
 type SubscriptionResolver = (state: ImmutableState, action: ImmutableAction, context: Object) => ImmutableState;
@@ -14,7 +15,7 @@ export default class Reducer {
   context: Object;
   subscriptions: Subscription[];
 
-  constructor(initialState: ImmutableState) {
+  constructor(initialState: InitialState) {
     this.state = Iterable.isIterable(initialState) ? initialState : fromJS(initialState);
     this.context = {};
     this.subscriptions = [];
@@ -37,6 +38,7 @@ export default class Reducer {
     return (state, action) => {
       this.subscriptions.forEach((subscription) => {
         const { action: subscribedAction } = subscription;
+
         const shouldResolve = (subscribedAction instanceof RegExp)
           ? subscribedAction.test(action.type)
           : (subscribedAction === action.type);
