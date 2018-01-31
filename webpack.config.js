@@ -5,8 +5,6 @@ const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const package = JSON.parse(fs.readFileSync('./package.json'));
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-
 module.exports = {
   entry: path.resolve(__dirname, './src/index.ts'),
   output: {
