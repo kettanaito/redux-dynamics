@@ -15,7 +15,7 @@ reducer.subscribe('ADD_COMMENT', (state, action, context) => {
 /* Create a new Redux store */
 const store = createStore(reducer.toFunction());
 
-describe('Create reducer', () => {
+describe('Reducer', () => {
   it('Library exports are fine', () => {
     return expect(Reducer).to.not.be.undefined;
   });
