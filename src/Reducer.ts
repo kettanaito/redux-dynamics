@@ -1,11 +1,9 @@
 import invariant from 'invariant';
-import { fromJS, Iterable } from 'immutable';
+import { fromJS, Iterable, Map } from 'immutable';
 import { Reducer as ReduxReducer, Action as ReduxAction } from 'redux';
 
-type InitialState = Object | any;
-type ImmutableState = Iterable<any, any> | any;
-type ImmutableAction = typeof Iterable;
-type SubscriptionResolver = (state: ImmutableState, action: ImmutableAction, context: Object) => ImmutableState;
+type ImmutableState = Iterable<any, any>;
+type SubscriptionResolver = (state: ImmutableState, action: Map<string, any>, context: Object) => Iterable<any, any>;
 type Subscription = {
   action: RegExp | string,
   resolver: SubscriptionResolver
@@ -16,7 +14,7 @@ export default class Reducer {
   context: Object;
   subscriptions: Subscription[];
 
-  constructor(initialState: InitialState) {
+  constructor(initialState: any) {
     this.state = Iterable.isIterable(initialState) ? initialState : fromJS(initialState);
     this.context = {};
     this.subscriptions = [];
@@ -26,10 +24,9 @@ export default class Reducer {
   /**
    * Subscribes reducer to the provided action.
    */
-  subscribe(action: string, resolver: SubscriptionResolver) {
+  subscribe(action: string, resolver: SubscriptionResolver): Reducer {
     invariant(action, `Cannot create a reducer subscription. Expected action type as the first argument, but got: ${action}.`);
-
-    invariant(resolver, `Cannot create a reducer subscription. Expected a handler function as the second argument, but got: ${resolver}`);
+    invariant(resolver, `Cannot create a reducer subscription. Expected a resolver function as the second argument, but got: ${resolver}`);
 
     this.subscriptions.push({ action, resolver });
     return this;
@@ -39,7 +36,7 @@ export default class Reducer {
    * Converts Reducer class to the plain function expected by the
    * Redux's "createStore" function.
    */
-  toFunction(): ReduxReducer<ReduxAction> {
+  toFunction(): ReduxReducer<ImmutableState> {
     return (state, action) => {
       this.subscriptions.forEach((subscription) => {
         const { action: subscribedAction } = subscription;
