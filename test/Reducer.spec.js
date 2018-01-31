@@ -61,6 +61,16 @@ describe('Reducer', () => {
     expect(state.get('comments').get(1)).to.equal('abc');
   });
 
+  it('Throw on subscription attempt without the action', () => {
+    const reducer = new Reducer({});
+    expect(reducer.subscribe).to.throw();
+  });
+
+  it('Throw on subscription without the handler function', () => {
+    const reducer = new Reducer({});
+    expect(reducer.subscribe.bind(this, 'ACTION_TYPE')).to.throw();
+  });
+
   it('Throw on subscription not returning the next state', () => {
     const reducer = new Reducer({ prop: true });
     reducer.subscribe('ACTION_ONE', () => {});
@@ -88,7 +98,7 @@ describe('Reducer', () => {
     reducer.subscribe('ACTION_THREE', (state, action, context) => {
       expect(context).to.not.have.property('firstProp');
       expect(context).to.have.property('secondProp', 'poo');
-      // return state;
+      return state;
     });
 
     const store = createStore(reducer.toFunction());

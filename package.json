@@ -29,7 +29,8 @@
     "prepublish": "npm run build && npm test"
   },
   "dependencies": {
-    "immutable": "^3.8.1"
+    "immutable": "^3.8.1",
+    "invariant": "^2.2.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",

@@ -1,3 +1,4 @@
+import invariant from 'invariant';
 import { fromJS, Iterable } from 'immutable';
 import { Reducer as ReduxReducer, Action as ReduxAction } from 'redux';
 
@@ -26,6 +27,10 @@ export default class Reducer {
    * Subscribes reducer to the provided action.
    */
   subscribe(action: string, resolver: SubscriptionResolver) {
+    invariant(action, `Cannot create a reducer subscription. Expected action type as the first argument, but got: ${action}.`);
+
+    invariant(resolver, `Cannot create a reducer subscription. Expected a handler function as the second argument, but got: ${resolver}`);
+
     this.subscriptions.push({ action, resolver });
     return this;
   }
@@ -47,9 +52,7 @@ export default class Reducer {
         if (shouldResolve) {
           const nextState = subscription.resolver(this.state, fromJS(action), this.context);
 
-          if (!nextState) {
-            throw new Error(`Expected reducer to return the next state, but got: ${nextState}. Check the return statement for the "${dispatchedType}" subscription.`);
-          }
+          invariant(nextState, `Expected reducer to return the next state, but got: ${nextState}. Check the return statement for the "${dispatchedType}" subscription.`);
 
           this.state = nextState;
         }
