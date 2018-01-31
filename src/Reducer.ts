@@ -37,17 +37,17 @@ export default class Reducer {
    * Redux's "createStore" function.
    */
   toFunction(): ReduxReducer<ImmutableState> {
-    return (state, action) => {
+    return (state, dispatchedAction) => {
       this.subscriptions.forEach((subscription) => {
         const { action: subscribedAction } = subscription;
-        const { type: dispatchedType } = action;
+        const { type: dispatchedType } = dispatchedAction;
 
         const shouldResolve = (subscribedAction instanceof RegExp)
           ? subscribedAction.test(dispatchedType)
           : (subscribedAction === dispatchedType);
 
         if (shouldResolve) {
-          const nextState = subscription.resolver(this.state, fromJS(action), this.context);
+          const nextState = subscription.resolver(this.state, fromJS(dispatchedAction), this.context);
 
           invariant(nextState, `Expected reducer to return the next state, but got: ${nextState}. Check the return statement for the "${dispatchedType}" subscription.`);
 
