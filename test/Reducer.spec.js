@@ -22,6 +22,11 @@ describe('General', () => {
 });
 
 describe('Reducer', () => {
+  it('Allow undefined initial state', () => {
+    const createCustomReducer = () => new Reducer();
+    expect(createCustomReducer).not.to.throw();
+  });
+
   /**
    * Initial state passed to the method should propagate to Redux state.
    */

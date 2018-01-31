@@ -25,8 +25,11 @@ export default class Reducer {
    * Subscribes reducer to the provided action.
    */
   subscribe(action: string, resolver: SubscriptionResolver): Reducer {
-    invariant(action, `Cannot create a reducer subscription. Expected action type as the first argument, but got: ${action}.`);
-    invariant(resolver, `Cannot create a reducer subscription. Expected a resolver function as the second argument, but got: ${resolver}`);
+    invariant(action,`Cannot create a reducer subscription. Expected action type as the first argument, ` +
+    `but got: ${action}.`);
+
+    invariant(resolver, `Cannot create a reducer subscription. Expected a resolver function as the ` +
+    `second argument, but got: ${resolver}`);
 
     this.subscriptions.push({ action, resolver });
     return this;
@@ -49,7 +52,8 @@ export default class Reducer {
         if (shouldResolve) {
           const nextState = subscription.resolver(this.state, fromJS(dispatchedAction), this.context);
 
-          invariant(nextState, `Expected reducer to return the next state, but got: ${nextState}. Check the return statement for the "${dispatchedType}" subscription.`);
+          invariant(nextState, `Expected reducer to return the next state, but got: ${nextState}. ` +
+          `Check the return statement for the "${dispatchedType}" subscription.`);
 
           this.state = nextState;
         }
